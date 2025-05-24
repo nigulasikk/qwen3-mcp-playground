@@ -44,14 +44,18 @@ def init_agent_service():
                     ]
                 },
                
-                # 画流程图
                 "mermaid": {
+                # 画流程图
                     "command": "npx",
                     "args": [
                         "-y", 
                         "@peng-shawn/mermaid-mcp-server",
                         r"C:\Users\1\Desktop",
                     ]
+                },
+                "iot-mcp": {
+                    "command": "python",
+                    "args": ["iot-mcp-server.py"]
                 }
                 # "mcp-server-chart": {
                 #     "command": "npx",
@@ -71,7 +75,7 @@ def init_agent_service():
         bot = Assistant(
             llm=llm_cfg,
             function_list=tools,
-            system_message="""你是我的工作助手，能帮我处理各种任务，包括 给PDF加水印，发送信息，画流程图等。以下是一些你掌握的知识：
+            system_message="""你是我的工作助手，能帮我处理各种任务，包括 给PDF加水印，发送信息，画流程图,控制加湿器，控制植物补光灯等。以下是一些你掌握的知识：
         1.发送消息流程： 先使用 get_contacts 工具获取联系人列表，再从列表中找到目标联系人对象（包含id和name），最后使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
         2.当前电脑桌面路径为：C:\\Users\\1\\Desktop"""
         
@@ -136,7 +140,10 @@ def app_gui():
         'prompt.suggestions': [
             '我需要把我桌面上的qwen-vl.pdf发给老婆和张三，并且发给他们的pdf都需要加上他们名字的水印(如“共享给某某某的学习资料”)。最后用 mermaind画一张本次任务完整的流程图放在桌面上”),所有任务完成后回复“任务完成”',
             '执行任务前先用 mermaind画一张本次任务完整的流程图放在桌面上',
-            '给老婆发一条消息说我今晚加班'
+            '开启加湿器',
+            '关闭加湿器',
+            "开启植物补光灯",
+            "关闭植物补光灯",
         ]
     }
     
