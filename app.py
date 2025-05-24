@@ -45,14 +45,14 @@ def init_agent_service():
                 },
                
                 # 画流程图
-                # "mermaid": {
-                #     "command": "npx",
-                #     "args": [
-                #         "-y", 
-                #         "@peng-shawn/mermaid-mcp-server",
-                #         ""
-                #     ]
-                # }
+                "mermaid": {
+                    "command": "npx",
+                    "args": [
+                        "-y", 
+                        "@peng-shawn/mermaid-mcp-server",
+                        r"C:\Users\1\Desktop",
+                    ]
+                }
                 # "mcp-server-chart": {
                 #     "command": "npx",
                 #     "args": [
@@ -137,7 +137,7 @@ def app_gui():
     # 配置聊天界面
     chatbot_config = {
         'prompt.suggestions': [
-            '给张三发送一条消息，告诉他明天会议取消了',
+            '我需要把我桌面上的qwen-vl.pdf发给我所有的联系人，并且发给他们的pdf都需要加上他们名字的水印(如“共享给[xxx(收件人名字)]的学习资料”)，最后用 mermaind画一张这次调用MCP过程图放在桌面上 。',
             '获取我的联系人列表',
             '给老婆发一条消息说我今晚加班'
         ]

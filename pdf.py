@@ -11,14 +11,38 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 # 注册中文字体
 def register_chinese_font():
-    """注册中文字体，如果系统中存在STHeiti Light.ttc则使用该字体"""
-    font_path = "/System/Library/Fonts/STHeiti Light.ttc"
-    if os.path.exists(font_path):
-        pdfmetrics.registerFont(TTFont("STHeiti", font_path))
-        return "STHeiti"
-    else:
-        # 如果找不到STHeiti字体，可以在这里添加其他中文字体的寻找和注册逻辑
-        return None
+    """注册中文字体，支持 Windows 和 Mac 系统"""
+    # Windows 系统字体路径
+    windows_font_paths = [
+        r"C:\Windows\Fonts\simhei.ttf",  # 黑体
+        r"C:\Windows\Fonts\simsun.ttc",  # 宋体
+        r"C:\Windows\Fonts\msyh.ttc",    # 微软雅黑
+    ]
+    
+    # Mac 系统字体路径
+    mac_font_path = "/System/Library/Fonts/STHeiti Light.ttc"
+    
+    # 根据操作系统选择字体路径
+    if os.name == 'nt':  # Windows 系统
+        for font_path in windows_font_paths:
+            if os.path.exists(font_path):
+                try:
+                    pdfmetrics.registerFont(TTFont("ChineseFont", font_path))
+                    return "ChineseFont"
+                except Exception as e:
+                    print(f"注册字体 {font_path} 失败: {str(e)}")
+                    continue
+    else:  # Mac 或其他系统
+        if os.path.exists(mac_font_path):
+            try:
+                pdfmetrics.registerFont(TTFont("STHeiti", mac_font_path))
+                return "STHeiti"
+            except Exception as e:
+                print(f"注册字体 {mac_font_path} 失败: {str(e)}")
+    
+    # 如果所有字体都注册失败，返回 None
+    print("警告：未能找到合适的中文字体，将使用默认字体")
+    return None
 
 def add_watermark(input_pdf, output_pdf, watermark_pdf):
     with open(input_pdf, 'rb') as input_file, open(watermark_pdf, 'rb') as watermark_file:
