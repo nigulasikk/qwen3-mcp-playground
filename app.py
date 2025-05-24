@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Qwen-Agent客户端
@@ -11,23 +10,22 @@ from qwen_agent.utils.output_beautify import typewriter_print
 
 def init_agent_service():
     """初始化智能体服务"""
+    print("开始配置LLM参数...")
     llm_cfg = {
         'model': 'Qwen/Qwen3-14B',
-        'model_server': 'http://localhost:1234/v1',  # api_base
+        'model_server': 'http://127.0.0.1:1234/v1',  # api_base
         'api_key': 'EMPTY',
         # 'thought_in_content': False,
         # 或者使用DashScope服务
         # 'model': 'qwen3-32b',
         # 'api_key': os.getenv('DASHSCOPE_API_KEY', '')  # 从环境变量获取API密钥
     }
+    print("LLM参数配置完成")
 
+    print("开始配置工具列表...")
     tools = [
         {
-            'mcpServers': {  # You can specify the MCP configuration file
-                'time': {
-                    'command': 'uvx',
-                    'args': ['mcp-server-time', '--local-timezone=Asia/Shanghai']
-                },
+            'mcpServers': {  
                 'chat-mcp': {
                     'command': 'python',
                     'args': ['chat-mcp-server.py']
@@ -37,14 +35,14 @@ def init_agent_service():
                     'args': ['pdf-mcp-server.py']
                 },
                 # 文件操作
-                "filesystem": {
-                    "command": "npx",
-                    "args": [
-                        "-y",
-                        "@modelcontextprotocol/server-filesystem",
-                        "./",
-                    ]
-                },
+                # "filesystem": {
+                #     "command": "npx",
+                #     "args": [
+                #         "-y",
+                #         "@modelcontextprotocol/server-filesystem",
+                #         "./",
+                #     ]
+                # },
                
                 # 画流程图
                 # "mermaid": {
@@ -64,20 +62,26 @@ def init_agent_service():
                 # }
             },
         },
-        'code_interpreter'
+        # 'code_interpreter'
     ]
+    print("工具列表配置完成")
 
-    bot = Assistant(
-        llm=llm_cfg,
-        function_list=tools,
-        system_message="""你是一个能帮助用户发送消息的助手。当用户要求你发送消息时，请按照以下步骤操作：
-    1. 先使用 get_contacts 工具获取联系人列表
-    2. 从列表中找到目标联系人对象（包含id和name）
-    3. 使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
-    请始终使用中文回复。"""
-    )
-
-    return bot
+    print("Assistant 开始初始化")
+    try:
+        bot = Assistant(
+            llm=llm_cfg,
+            function_list=tools,
+            system_message="""你是一个能帮助用户发送消息的助手。当用户要求你发送消息时，请按照以下步骤操作：
+        1. 先使用 get_contacts 工具获取联系人列表
+        2. 从列表中找到目标联系人对象（包含id和name）
+        3. 使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
+        请始终使用中文回复。"""
+        )
+        print("初始化智能体完成")
+        return bot
+    except Exception as e:
+        print(f"初始化过程中出现错误: {str(e)}")
+        raise
 
 
 def test(query: str = '给张三发送一条消息，告诉他明天会议取消了'):
@@ -145,6 +149,7 @@ def app_gui():
 
 
 if __name__ == "__main__":
+    print("开始运行")
     # 可以取消注释下面三行中的一行来选择运行模式
     # test()
     # app_tui()
