@@ -24,6 +24,7 @@ def add_pdf_watermark(input_pdf: str, output_pdf: str, text: str, font_size: int
     try:
         # 调用pdf.py中的水印功能
         add_text_watermark(input_pdf, output_pdf, text, font_size, opacity, angle)
+        print(f"已成功为 {input_pdf} 添加水印并保存为 {output_pdf}")
         return f"已成功为 {input_pdf} 添加水印并保存为 {output_pdf}"
     except Exception as e:
         return f"添加水印失败: {str(e)}"

@@ -15,7 +15,7 @@ def init_agent_service():
         'model': 'Qwen/Qwen3-14B',
         'model_server': 'http://127.0.0.1:1234/v1',  # api_base
         'api_key': 'EMPTY',
-        # 'thought_in_content': False,
+        'thought_in_content': False,
         # 或者使用DashScope服务
         # 'model': 'qwen3-32b',
         # 'api_key': os.getenv('DASHSCOPE_API_KEY', '')  # 从环境变量获取API密钥
@@ -71,12 +71,9 @@ def init_agent_service():
         bot = Assistant(
             llm=llm_cfg,
             function_list=tools,
-            system_message="""你是一个能帮助用户发送消息的助手。当用户要求你发送消息时，请按照以下步骤操作：
-        1. 先使用 get_contacts 工具获取联系人列表
-        2. 从列表中找到目标联系人对象（包含id和name）
-        3. 使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
-        请始终使用中文回复。
-        其他信息：1.桌面路径为：C:\\Users\\1\\Desktop"""
+            system_message="""你是我的工作助手，能帮我处理各种任务，包括 给PDF加水印，发送信息，画流程图等。以下是一些你掌握的知识：
+        1.发送消息流程： 先使用 get_contacts 工具获取联系人列表，再从列表中找到目标联系人对象（包含id和name），最后使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
+        2.当前电脑桌面路径为：C:\\Users\\1\\Desktop"""
         
         )
         print("初始化智能体完成")
@@ -137,7 +134,7 @@ def app_gui():
     # 配置聊天界面
     chatbot_config = {
         'prompt.suggestions': [
-            '我需要把我桌面上的qwen-vl.pdf发给我所有的联系人，并且发给他们的pdf都需要加上他们名字的水印(如“共享给[xxx(收件人名字)]的学习资料”)，最后用 mermaind画一张这次调用MCP过程图放在桌面上 。',
+            '我需要把我桌面上的qwen-vl.pdf发给老婆和张三，并且发给他们的pdf都需要加上他们名字的水印(如“共享给某某某的学习资料”)。最后用 mermaind画一张本次任务完整的流程图放在桌面上”)。',
             '获取我的联系人列表',
             '给老婆发一条消息说我今晚加班'
         ]
