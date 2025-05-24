@@ -35,14 +35,14 @@ def init_agent_service():
                     'args': ['pdf-mcp-server.py']
                 },
                 # 文件操作
-                # "filesystem": {
-                #     "command": "npx",
-                #     "args": [
-                #         "-y",
-                #         "@modelcontextprotocol/server-filesystem",
-                #         "./",
-                #     ]
-                # },
+                "filesystem": {
+                    "command": "npx",
+                    "args": [
+                        "-y",
+                        "@modelcontextprotocol/server-filesystem",
+                        r"C:\Users\1\Desktop",
+                    ]
+                },
                
                 # 画流程图
                 # "mermaid": {
@@ -75,7 +75,9 @@ def init_agent_service():
         1. 先使用 get_contacts 工具获取联系人列表
         2. 从列表中找到目标联系人对象（包含id和name）
         3. 使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
-        请始终使用中文回复。"""
+        请始终使用中文回复。
+        其他信息：1.桌面路径为：C:\\Users\\1\\Desktop"""
+        
         )
         print("初始化智能体完成")
         return bot
