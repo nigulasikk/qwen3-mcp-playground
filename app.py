@@ -40,7 +40,7 @@ def init_agent_service():
                     "args": [
                         "-y",
                         "@modelcontextprotocol/server-filesystem",
-                        r"C:\Users\1\Desktop",
+                        r"./",
                     ]
                 },
                
@@ -50,7 +50,7 @@ def init_agent_service():
                     "args": [
                         "-y", 
                         "@peng-shawn/mermaid-mcp-server",
-                        r"C:\Users\1\Desktop",
+                        r"./",
                     ]
                 },
                 "iot-mcp": {
@@ -77,7 +77,7 @@ def init_agent_service():
             function_list=tools,
             system_message="""你是我的工作助手，能帮我处理各种任务，包括 给PDF加水印，发送信息，画流程图,控制加湿器，控制植物补光灯等。以下是一些你掌握的知识：
         1.发送消息流程： 先使用 get_contacts 工具获取联系人列表，再从列表中找到目标联系人对象（包含id和name），最后使用 send_message 工具，将联系人对象和消息内容作为参数发送消息
-        2.当前电脑桌面路径为：C:\\Users\\1\\Desktop"""
+        """
         
         )
         print("初始化智能体完成")
@@ -138,7 +138,7 @@ def app_gui():
     # 配置聊天界面
     chatbot_config = {
         'prompt.suggestions': [
-            '/no think 我需要把我桌面上的qwen-vl.pdf发给老婆和张三，并且发给他们的pdf都需要加上他们名字的水印(如“共享给某某某的学习资料”)”',
+            '/no think 我需要把当前目录下的qwen3.pdf发给张三和李四，并且发给他们的pdf都需要加上他们名字的水印(如“共享给某某某的学习资料”)”',
             '/no think 执行任务前先用 mermaind画一张本次任务完整的流程图放在桌面上',
             '/no think 开启加湿器',
             '/no think 关闭加湿器',
